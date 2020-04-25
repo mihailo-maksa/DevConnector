@@ -10,7 +10,7 @@ const Post = require("../../models/Post");
 // @desc    Create a post
 // @access  Private
 router.post(
-  "/api/posts",
+  "/",
   [auth, [check("text", "Post cannot be empty.").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -42,9 +42,9 @@ router.post(
 // @route   GET api/posts
 // @desc    Get all posts
 // @access  Private
-router.get("/api/posts", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    let posts = await Post.find();
+    let posts = await Post.find().sort({ date: -1 });
 
     res.json(posts);
   } catch (err) {
@@ -56,17 +56,22 @@ router.get("/api/posts", auth, async (req, res) => {
 // @route   GET api/posts/:id
 // @desc    Get post by ID
 // @access  Private
-router.get("/api/posts/:id", auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(400).send("The post doesn't exist");
+      return res.status(404).json({ msg: "Post not found" });
     }
 
     res.json(post);
   } catch (err) {
     console.error(err.message);
+
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
     res.status(500).send("Internal Server Error");
   }
 });
@@ -74,13 +79,27 @@ router.get("/api/posts/:id", auth, async (req, res) => {
 // @route   DELETE api/posts/:id
 // @desc    Delete a post
 // @access  Private
-router.delete("/api/posts/:id", auth, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    // check user
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
     await post.remove();
+
+    res.json({ msg: "Post removed" });
   } catch (err) {
     console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
     res.status(500).send("Internal Server Error");
   }
 });
@@ -88,19 +107,24 @@ router.delete("/api/posts/:id", auth, async (req, res) => {
 // @route   PUT api/posts/like/:id
 // @desc    Like a post
 // @access  Private
-router.put("/api/posts/like/:id", auth, async (req, res) => {
+router.put("/like/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(400).json({ msg: "This post has been removd" });
+      return res.status(404).json({ msg: "Post not found" });
     }
 
-    const like = { user: req.user.id };
+    // check if the post has already been liked
+    if (post.likes.some((like) => like.user.toString() === req.user.id)) {
+      return res.status(400).json({ msg: "Post already liked" });
+    }
 
-    post.likes.unshift(like);
+    post.likes.unshift({ user: req.user.id });
 
-    res.json(post);
+    await post.save();
+
+    return res.json(post.likes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Internal Server Error");
@@ -110,17 +134,27 @@ router.put("/api/posts/like/:id", auth, async (req, res) => {
 // @route   PUT api/posts/unlike/:id
 // @desc    Unlike a post
 // @access  Private
-router.put("/api/posts/unlike/:id", auth, async (req, res) => {
+router.put("/unlike/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
+    // check user
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    // check if post has alreadty been liked
+    if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
+      return res.status(400).json({ msg: "Post hasn't been liked yet" });
+    }
+
     post.likes = post.likes.filter(
-      (like) => like._id.toString() !== req.params.id
+      (like) => like.user.toString() !== req.user.id
     );
 
     await post.save();
 
-    return res.status(200).json(post);
+    return res.json(post.likes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Internal Server Error");
@@ -131,7 +165,7 @@ router.put("/api/posts/unlike/:id", auth, async (req, res) => {
 // @desc    Comment on a post
 // @access  Private
 router.post(
-  "/api/posts/comment/:id",
+  "/comment/:id",
   [auth, [check("text", "Comment cannot be empty").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -145,21 +179,21 @@ router.post(
       const post = await Post.findById(req.params.id);
 
       if (!post) {
-        return res.status(400).json({ msg: "This post has been removed" });
+        return res.status(404).json({ msg: "Post not found" });
       }
 
-      const comment = {
-        user: req.user.id,
+      const newComment = {
+        text: req.body.text,
         name: user.name,
-        avatar: user.name,
-        text: req.body.text
+        avatar: user.avatar,
+        user: req.user.id
       };
 
-      post.comments.unshift(comment);
+      post.comments.unshift(newComment);
 
       await post.save();
 
-      res.json(post);
+      res.json(post.comments);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Internal Server Error");
@@ -170,17 +204,105 @@ router.post(
 // @route   DELETE api/posts/comment/:id/:comment_id
 // @desc    Delete comment
 // @access  Private
-router.delete("/api/posts/comment/:id/:comment_id", auth, async (req, res) => {
+router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    post.comments = post.comments.filter(
-      (comment) => comment._id.toString() !== req.params.comment_id
+    // pull out the comment
+    const comment = post.comments.find(
+      (comment) => comment.id.toString() === req.params.comment_id
     );
+
+    // make sure comment exists
+    if (!comment) {
+      return res.status(404).json({ msg: "Comment does not exist" });
+    }
+
+    // check user
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    post.comments = post.comments.filter(
+      (comment) => comment.id.toString() !== req.params.comment_id
+    );
+
+    await post.save();
+
+    res.json(post.comments);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Internal Server Error");
   }
 });
+
+// CUSTOM FUNCTIONALITY: ADD THESE THINGS LATER IF YOU WANT TO CHALLENGE YOURSELF MORE!!!
+
+// @route   PUT api/posts/comment/like/:id
+// @desc    Like a comment
+// @access  Private
+// router.put("/comment/like/:id", auth, async (req, res) => {
+//   try {
+//     const post = await Post.findById(req.params.id);
+
+//     if (!post) {
+//       return res.status(404).json({ msg: "Post not found" });
+//     }
+
+//     // check if the post has already been liked
+//     if (post.likes.some((like) => like.user.toString() === req.user.id)) {
+//       return res.status(400).json({ msg: "Post already liked" });
+//     }
+
+//     post.likes.unshift({ user: req.user.id });
+
+//     await post.save();
+
+//     return res.json(post.likes);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+// // @route   PUT api/posts/comment/unlike/:id
+// // @desc    Unlike a comment
+// // @access  Private
+// router.put("/comment/unlike/:id", auth, async (req, res) => {
+//   try {
+//     const post = await Post.findById(req.params.id);
+
+//     // check user
+//     if (post.user.toString() !== req.user.id) {
+//       return res.status(401).json({ msg: "User not authorized" });
+//     }
+
+//     // check if post has alreadty been liked
+//     if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
+//       return res.status(400).json({ msg: "Post hasn't been liked yet" });
+//     }
+
+//     post.likes = post.likes.filter(
+//       (like) => like.user.toString() !== req.user.id
+//     );
+
+//     await post.save();
+
+//     return res.json(post.likes);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+// // @route   PUT api/posts/:id
+// // @desc    Upaate a post
+// // @access  Private
+// router.put("/:id");
+
+// // @route   PUT api/posts/comment/:id/:comment_id
+// // @desc    Update a comment
+// // @access  Private
+// router.put("/comment/:id/:comment_id");
 
 module.exports = router;

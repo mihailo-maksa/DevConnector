@@ -9,7 +9,7 @@ const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 
 // @route   GET api/auth
-// @desc    Let the user see his account's data
+// @desc    Let the user see his account's data (i.e. Get user by token)
 // @access  Protected
 router.get("/", auth, async (req, res) => {
   // Get the user's data & send it in the JSON format
@@ -24,7 +24,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // @route POST api/auth
-// @desc Authenticate user & get the token(JWT)
+// @desc Authenticate user & get the JWT token (i.e. log in the user)
 // @access Public
 router.post(
   "/",

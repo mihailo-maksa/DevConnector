@@ -2,3 +2,4 @@ node_modules/
 default.json
 .env
 .DS_Store
+*.txt 

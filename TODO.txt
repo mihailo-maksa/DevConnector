@@ -5,7 +5,7 @@ UPDATE THE ANGELLIST PROFILE
 
 
 DEVCONNECTOR (The MERN Stack Course): 
-1.) Finish the Course & the Whole App ASAP (max. 10 Days!)
+1.) Finish the Course & the Whole App ASAP! (max. 10 Days!) - change back to { expiresIn: 3600 } inside auth.js & users.js routes before deploying the app!!
 2.) Add it to the projectInfo.js inside Portfolio Website
 3.) Add it to the Resume (with the Corresponding URL)
 4.) Add it to Your AngelList Profile 
