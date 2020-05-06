@@ -66,8 +66,8 @@ router.post(
       jwt.sign(
         // jwt.sign(payloadThatContainsId, secretString, optionsObject, callback with (err, token));
         payload,
-        config.get("jwtSecret"), // Make sure to change it back
-        { expiresIn: 360000 }, // to { expiresIn: 3600 } before deploying the app!!
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

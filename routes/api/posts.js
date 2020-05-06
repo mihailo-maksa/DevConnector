@@ -11,7 +11,7 @@ const Post = require("../../models/Post");
 // @access  Private
 router.post(
   "/",
-  [auth, [check("text", "Post cannot be empty.").not().isEmpty()]],
+  [auth, [check("text", "Post cannot be empty").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
 
@@ -143,7 +143,7 @@ router.put("/unlike/:id", auth, async (req, res) => {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
-    // check if post has alreadty been liked
+    // check if post has already been liked
     if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: "Post hasn't been liked yet" });
     }
@@ -235,74 +235,5 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-// CUSTOM FUNCTIONALITY: ADD THESE THINGS LATER IF YOU WANT TO CHALLENGE YOURSELF MORE!!!
-
-// @route   PUT api/posts/comment/like/:id
-// @desc    Like a comment
-// @access  Private
-// router.put("/comment/like/:id", auth, async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id);
-
-//     if (!post) {
-//       return res.status(404).json({ msg: "Post not found" });
-//     }
-
-//     // check if the post has already been liked
-//     if (post.likes.some((like) => like.user.toString() === req.user.id)) {
-//       return res.status(400).json({ msg: "Post already liked" });
-//     }
-
-//     post.likes.unshift({ user: req.user.id });
-
-//     await post.save();
-
-//     return res.json(post.likes);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
-// // @route   PUT api/posts/comment/unlike/:id
-// // @desc    Unlike a comment
-// // @access  Private
-// router.put("/comment/unlike/:id", auth, async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id);
-
-//     // check user
-//     if (post.user.toString() !== req.user.id) {
-//       return res.status(401).json({ msg: "User not authorized" });
-//     }
-
-//     // check if post has alreadty been liked
-//     if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
-//       return res.status(400).json({ msg: "Post hasn't been liked yet" });
-//     }
-
-//     post.likes = post.likes.filter(
-//       (like) => like.user.toString() !== req.user.id
-//     );
-
-//     await post.save();
-
-//     return res.json(post.likes);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
-// // @route   PUT api/posts/:id
-// // @desc    Upaate a post
-// // @access  Private
-// router.put("/:id");
-
-// // @route   PUT api/posts/comment/:id/:comment_id
-// // @desc    Update a comment
-// // @access  Private
-// router.put("/comment/:id/:comment_id");
 
 module.exports = router;

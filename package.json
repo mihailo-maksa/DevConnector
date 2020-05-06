@@ -7,19 +7,24 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Mihailo Maksa\u001b[D\u001b[C",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "config": "^3.3.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
     "express-validator": "^6.4.0",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.7"
+    "mongoose": "^5.9.7",
+    "normalize-url": "^5.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",

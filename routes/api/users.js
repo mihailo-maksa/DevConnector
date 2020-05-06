@@ -5,6 +5,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const normalize = require("normalize-url");
 
 const User = require("../../models/User");
 
@@ -41,11 +42,14 @@ router.post(
 
       // Get the user's gravatar
 
-      const avatar = gravatar.url({
-        s: "200",
-        r: "pg",
-        d: "mm"
-      });
+      const avatar = normalize(
+        gravatar.url(email, {
+          s: "200",
+          r: "pg",
+          d: "mm"
+        }),
+        { forceHttps: true }
+      );
 
       user = new User({
         name,
@@ -75,8 +79,8 @@ router.post(
       jwt.sign(
         // jwt.sign(payloadThatContainsId, secretString, optionsObject, callback with (err, token));
         payload,
-        config.get("jwtSecret"), // Make sure to change it back
-        { expiresIn: 3600000 }, // { expiresIn: 3600 } before deploying the app!!
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

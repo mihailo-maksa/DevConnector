@@ -3,13 +3,12 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const axios = require("axios");
 const config = require("config");
+const normalize = require("normalize-url");
 
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
-
-// user_id for testing: 5e907fd2311cb50fb82fdd6f
 
 // @route   GET api/profile/me
 // @desc    Get current user's profile
@@ -40,7 +39,7 @@ router.post(
   [
     auth,
     [
-      check("status", "Status is required.").not().isEmpty(),
+      check("status", "Status is required").not().isEmpty(),
       check("skills", "Skills are required").not().isEmpty()
     ]
   ],
@@ -71,7 +70,8 @@ router.post(
     profileFields.user = req.user.id;
 
     if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
+    if (website)
+      profileFields.website = normalize(website, { forceHttps: true });
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
     if (githubusername) profileFields.githubusername = githubusername;
@@ -83,11 +83,17 @@ router.post(
     // Initialize the social property of the profileFields
     profileFields.social = {};
 
-    if (youtube) profileFields.social.youtube = youtube;
-    if (facebook) profileFields.social.facebook = facebook;
-    if (twitter) profileFields.social.twitter = twitter;
-    if (linkedin) profileFields.social.linkedin = linkedin;
-    if (instagram) profileFields.social.instagram = instagram;
+    if (youtube) profileFields.social.youtube = normalize(youtube);
+    if (facebook)
+      profileFields.social.facebook = normalize(facebook, { forceHttps: true });
+    if (twitter)
+      profileFields.social.twitter = normalize(twitter, { forceHttps: true });
+    if (linkedin)
+      profileFields.social.linkedin = normalize(linkedin, { forceHttps: true });
+    if (instagram)
+      profileFields.social.instagram = normalize(instagram, {
+        forceHttps: true
+      });
 
     try {
       let profile = await Profile.findOne({ user: req.user.id });
@@ -98,7 +104,7 @@ router.post(
         profile = await Profile.findOneAndUpdate(
           { user: req.user.id },
           { $set: profileFields },
-          { new: true }
+          { new: true, upsert: true }
         );
         return res.json(profile);
       }
@@ -162,7 +168,6 @@ router.delete("/", auth, async (req, res) => {
   try {
     // Delete user posts
     await Post.deleteMany({ user: req.user.id });
-
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
     // Remove user
