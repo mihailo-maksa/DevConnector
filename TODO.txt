@@ -4,9 +4,10 @@
   (Fab from @material-ui/core)
 
 2.) Pre-deployment optimizations on frontend: 
-       React.lazy, React.memo, ErrorBoundary, Suspense with fallback (i.e. <Spinner />)
+    React.lazy, React.memo, ErrorBoundary, Suspense with fallback 
+    (i.e. <Spinner />)
 
-3.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub)
+3.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub!)
 
 
 

@@ -29,7 +29,7 @@ const ProfileItem = ({
           to={`/profile/${_id}`}
           className="btn btn-primary"
           style={{ fontWeight: "bold", borderRadius: "6px" }}
-          title="View Profile"
+          title={`View ${name.trim().split(" ")[0]}'s Profile`}
         >
           View Profile
         </Link>

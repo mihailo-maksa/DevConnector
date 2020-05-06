@@ -267,7 +267,7 @@ img {
 }
 
 .form input[type="search"]:focus {
-  background-image: url("");
+  background-image: url("http://x.com");
 }
 
 .search-input::placeholder {
