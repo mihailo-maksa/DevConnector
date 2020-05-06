@@ -1,37 +1,19 @@
 
-1.) FIX DEVCONNECTOR APP ISSUES & REDEPLOY IT AS A VERSION 2.0.0
-   Profiles.js: mobile display, search input styles
-   Profile.js: Back To Profiles & Edit Profile buttons centered to the left
-   Posts.js & PostItem.js: mobile display, replace like & dislike buttons with floating action buttons (Fab's)
-   Post.js & CommentItem.js: mobile display,
-   NotFound.js: Mobile display 
-ADD WHOLE DEVCONNECTOR SOURCE CODE TO GITHUB REPO
-FIX LIKE & UNLIKE FUNCTIONALITY
-Create a new user, new profile & few posts and comments to tst redux store
-TODAY FINISH BOTH DevConnector & COVID-19 Tracker App & Add them to the portfolio website & Github profile!
-Fix deployment errors...
+1.) FIX LIKE & UNLIKE FUNCTIONALITY 
+  & replace like & dislike buttons with floating action buttons
+  (Fab from @material-ui/core)
 
-2.) Pre-deployment optimizations: 
-  Frontend: React.lazy, React.memo, ErrorBoundary,
-            Suspense with fallback (i.e. <Spinner />)
-  Backend: Some minor optimizations for the production environment (packages cors, compression & express-sslify)
-           if (process.env.NODE_ENV === "production") {
-             app.use(compression());
-             app.use(enforce.HTTPS({ trustProtoHeader: true }));
-             app.use(express.static(path.join(__dirname, "client/build")));
+2.) Pre-deployment optimizations on frontend: 
+       React.lazy, React.memo, ErrorBoundary, Suspense with fallback (i.e. <Spinner />)
 
-             app.get("*", (req, res) => {
-               res.sendFile(path.join(__dirname, "client/build", "index.html"));
-             });
-           }
-
-3.) Deploy DevConnector to Heroku (Target Heroku URL: devconnectorwebapp.herokuapp.com)
-
-4.) Add it to the projectInfo.js inside Portfolio Website
-
-5.) Add it to the Resume (with the Corresponding URL)
-
-6.) Add it to Your AngelList Profile 
+3.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub)
 
 
-++ COMPLETE THE FULL CLOUD FUNCTIONS MASTER COURSE (max. 2 Days!)
+
+AFTER DEPLOYIN THE APP:
+
+1.) Add DevConnector to the Resume (with the Corresponding URL: devconnectorwebapp.herokuapp.com)
+
+2.) Add DevConnector to Your AngelList Profile 
+
+3.) COMPLETE THE FULL CLOUD FUNCTIONS MASTER COURSE (max. 2 Days!)

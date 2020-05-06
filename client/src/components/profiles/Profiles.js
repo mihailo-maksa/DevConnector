@@ -25,7 +25,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
       ) : (
         <Fragment>
           <h1 className="large text-primary">Developers</h1>
-          <p className="lead" style={{ textAlign: "center" }}>
+          <p className="lead developers-title" style={{ textAlign: "center" }}>
             <i className="fab fa-connectdevelop" /> Browse & Connect with
             Developers From All Around the World!
           </p>
@@ -42,7 +42,8 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
                   borderRadius: "10px",
                   boxShadow: "0 0 10px #ddd",
                   position: "relative",
-                  bottom: "10px"
+                  bottom: "10px",
+                  width: "225px"
                 }}
                 title="Search Developers..."
                 className="search-input"

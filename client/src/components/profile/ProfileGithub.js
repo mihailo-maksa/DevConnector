@@ -13,7 +13,10 @@ const ProfileGithub = ({ getGithubRepos, username, repos, name }) => {
 
   return (
     <div className="profile-github">
-      <h2 className="text-primary my-1" style={{ textAlign: "center" }}>
+      <h2
+        className="text-primary my-1 github-repos"
+        style={{ textAlign: "center" }}
+      >
         <i className="fab fa-github"></i> {name.trim().split(" ")[0]}
         's Latest Github Repos
       </h2>

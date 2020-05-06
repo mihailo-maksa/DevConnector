@@ -12,7 +12,10 @@ const ProfileItem = ({
   }
 }) => {
   return (
-    <div className="profile bg-light" style={{ borderRadius: "8px" }}>
+    <div
+      className="profile bg-light profile-card"
+      style={{ borderRadius: "8px" }}
+    >
       <img src={avatar} alt={name} className="round-img" title={name} />
       <div>
         <h2>{name}</h2>

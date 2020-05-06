@@ -12,7 +12,10 @@ const CommentItem = ({
   deleteComment,
   postId
 }) => (
-  <div className="post bg-white p-1 my-1" style={{ borderRadius: "8px" }}>
+  <div
+    className="post bg-white p-1 my-1 post-card"
+    style={{ borderRadius: "8px" }}
+  >
     <div>
       <Link
         to={`/profile/${user}`}
@@ -22,23 +25,34 @@ const CommentItem = ({
         <h4>{name}</h4>
       </Link>
     </div>
-    <div style={{ width: "450px", wordWrap: "break-word" }}>
-      <p className="my-1">{text}</p>
-      <p className="post-date">
-        Posted at <Moment format="h:mm">{date}</Moment> on{" "}
-        <Moment format="DD/MM/YYYY">{date}</Moment>
-      </p>
-      {!auth.loading && user === auth.user._id && (
-        <button
-          type="button"
-          className="btn btn-danger"
-          title="Delete Comment"
-          style={{ fontWeight: "bold", borderRadius: "5px" }}
-          onClick={() => deleteComment(postId, _id)}
-        >
-          <i className="fas fa-times" />
-        </button>
-      )}
+    <div
+      style={{ width: "450px", wordWrap: "break-word" }}
+      className="flex-post-card"
+    >
+      <p className="my-1 post-text">{text}</p>
+      <div className="flex-comment-actions">
+        <p className="post-date">
+          Posted at <Moment format="h:mm">{date}</Moment> on{" "}
+          <Moment format="DD/MM/YYYY">{date}</Moment>
+        </p>
+        {!auth.loading && user === auth.user._id && (
+          <button
+            type="button"
+            className="btn btn-danger"
+            title="Delete Comment"
+            style={{
+              fontWeight: "bold",
+              borderRadius: "5px",
+              marginLeft: "25px",
+              position: "relative",
+              bottom: "4px"
+            }}
+            onClick={() => deleteComment(postId, _id)}
+          >
+            <i className="fas fa-times" />
+          </button>
+        )}
+      </div>
     </div>
   </div>
 );

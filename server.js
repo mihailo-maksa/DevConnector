@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const compression = require("compression");
+const enforce = require("express-sslify");
 
 const connectDB = require("./config/db");
 
@@ -21,6 +23,8 @@ app.use("/api/posts", require("./routes/api/posts"));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
+  app.use(compression());
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
   // Set static folder
   app.use(express.static("client/build"));
 

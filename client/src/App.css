@@ -267,6 +267,14 @@ img {
 }
 
 .form input[type="search"]:focus {
+  background-image: url("");
+}
+
+.search-input::placeholder {
+  text-align: right;
+}
+
+.form input[type="search"]:focus {
   border: 1.33px solid var(--primary-color);
   outline: none;
 }
@@ -733,4 +741,63 @@ input[type="checkbox"].switch:checked {
 
 input[type="checkbox"].switch:disabled:not(:checked):after {
   opacity: 0.6;
+}
+
+/* OPTIMIZATIONS FOR MOBILE */
+
+@media screen and (max-width: 700px) {
+  .developers-title {
+    font-size: 14px;
+  }
+
+  .profile-card {
+    width: 70vw;
+  }
+
+  .post-card {
+    width: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .flex-post-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .post-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .post-text {
+    margin-top: 0;
+  }
+
+  .flex-comment-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .github-repos {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .img-not-found {
+    position: relative;
+    width: 80vw;
+  }
+
+  .not-found-title {
+    font-size: 2.2em;
+  }
 }
