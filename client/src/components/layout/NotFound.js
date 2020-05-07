@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import section from "../../utils/section";
@@ -21,7 +21,7 @@ const NotFound = () => {
         alt="Page Not Found"
         title="Page Not Found"
         style={{
-          dispaly: "inline-block",
+          display: "inline-block",
           backfroundSize: "cover",
           backgroundPosition: "center",
           width: isMobile ? "400px" : "700px",
@@ -32,4 +32,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default memo(NotFound);

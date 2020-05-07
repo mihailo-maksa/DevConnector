@@ -1,20 +1,24 @@
 // React
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// My React Components
-import Navbar from "./components/layout/Navbar";
-import Landing from "./components/layout/Landing";
-import Routes from "./components/routing/Routes";
-
-// Redux
+// Redux & Utils
 import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
+// Error Handlers
+import Spinner from "./components/layout/Spinner";
+import ErrorBoundary from "./components/layout/ErrorBoundary";
+
 // Global CSS
 import "./App.css";
+
+// My React Components
+const Navbar = lazy(() => import("./components/layout/Navbar"));
+const Landing = lazy(() => import("./components/layout/Landing"));
+const Routes = lazy(() => import("./components/routing/Routes"));
 
 const App = () => {
   useEffect(() => {
@@ -26,11 +30,15 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route component={Routes} />
-          </Switch>
+          <ErrorBoundary>
+            <Suspense fallback={<Spinner />}>
+              <Navbar />
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route component={Routes} />
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
         </Fragment>
       </Router>
     </Provider>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -49,4 +49,4 @@ PostForm.propTypes = {
   addPost: PropTypes.func.isRequired
 };
 
-export default connect(null, { addPost })(PostForm);
+export default memo(connect(null, { addPost })(PostForm));

@@ -83,7 +83,8 @@ router.post(
     // Initialize the social property of the profileFields
     profileFields.social = {};
 
-    if (youtube) profileFields.social.youtube = normalize(youtube);
+    if (youtube)
+      profileFields.social.youtube = normalize(youtube, { forceHttps: true });
     if (facebook)
       profileFields.social.facebook = normalize(facebook, { forceHttps: true });
     if (twitter)

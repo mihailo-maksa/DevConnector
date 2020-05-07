@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -53,4 +53,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps)(Landing);
+export default memo(connect(mapStateToProps)(Landing));

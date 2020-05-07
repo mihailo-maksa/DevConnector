@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -98,4 +98,4 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default memo(connect(mapStateToProps, { logout })(Navbar));

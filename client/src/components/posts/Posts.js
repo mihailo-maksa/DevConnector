@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default memo(connect(mapStateToProps, { getPosts })(Posts));

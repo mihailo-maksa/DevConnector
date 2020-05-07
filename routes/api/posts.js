@@ -111,9 +111,9 @@ router.put("/like/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    if (!post) {
-      return res.status(404).json({ msg: "Post not found" });
-    }
+    // if (!post) {
+    //   return res.status(404).json({ msg: "Post not found" });
+    // }
 
     // check if the post has already been liked
     if (post.likes.some((like) => like.user.toString() === req.user.id)) {
@@ -139,9 +139,9 @@ router.put("/unlike/:id", auth, async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     // check user
-    if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" });
-    }
+    // if (post.user.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: "User not authorized" });
+    // }
 
     // check if post has already been liked
     if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
@@ -149,7 +149,7 @@ router.put("/unlike/:id", auth, async (req, res) => {
     }
 
     post.likes = post.likes.filter(
-      (like) => like.user.toString() !== req.user.id
+      ({ user }) => user.toString() !== req.user.id
     );
 
     await post.save();

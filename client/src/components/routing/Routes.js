@@ -1,19 +1,19 @@
-import React from "react";
+import React, { lazy, memo } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Register from "../auth/Register";
-import Login from "../auth/Login";
-import Alert from "../layout/Alert";
-import Dashboard from "../dashboard/Dashboard";
-import PrivateRoute from "./PrivateRoute";
-import ProfileForm from "../profile-forms/ProfileForm";
-import AddExperience from "../profile-forms/AddExperience";
-import AddEducation from "../profile-forms/AddEducation";
-import Profiles from "../profiles/Profiles";
-import Profile from "../profile/Profile";
-import Posts from "../posts/Posts";
-import Post from "../post/Post";
-import NotFound from "../layout/NotFound";
+const Register = lazy(() => import("../auth/Register"));
+const Login = lazy(() => import("../auth/Login"));
+const Alert = lazy(() => import("../layout/Alert"));
+const Dashboard = lazy(() => import("../dashboard/Dashboard"));
+const PrivateRoute = lazy(() => import("./PrivateRoute"));
+const ProfileForm = lazy(() => import("../profile-forms/ProfileForm"));
+const AddExperience = lazy(() => import("../profile-forms/AddExperience"));
+const AddEducation = lazy(() => import("../profile-forms/AddEducation"));
+const Profiles = lazy(() => import("../profiles/Profiles"));
+const Profile = lazy(() => import("../profile/Profile"));
+const Posts = lazy(() => import("../posts/Posts"));
+const Post = lazy(() => import("../post/Post"));
+const NotFound = lazy(() => import("../layout/NotFound"));
 
 const Routes = () => {
   return (
@@ -37,4 +37,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default memo(Routes);

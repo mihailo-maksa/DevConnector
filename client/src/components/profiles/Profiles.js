@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, memo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -89,4 +89,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default memo(connect(mapStateToProps, { getProfiles })(Profiles));

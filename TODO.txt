@@ -1,14 +1,7 @@
 
-1.) FIX LIKE & UNLIKE FUNCTIONALITY 
-  & replace like & dislike buttons with floating action buttons
-  (Fab from @material-ui/core)
+1.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub!)
 
-2.) Pre-deployment optimizations on frontend: 
-    React.lazy, React.memo, ErrorBoundary, Suspense with fallback 
-    (i.e. <Spinner />)
-
-3.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub!)
-
+2.) Also push the updated code to GitHub, without production.json & update README.md (app version)
 
 
 AFTER DEPLOYIN THE APP:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, memo } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -326,6 +326,8 @@ const mapStateToProps = (state) => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-  withRouter(ProfileForm)
+export default memo(
+  connect(mapStateToProps, { createProfile, getCurrentProfile })(
+    withRouter(ProfileForm)
+  )
 );
