@@ -1,10 +1,4 @@
-
-1.) Redeploy the app to Heroku as version 2.0.0 (update that on GitHub!)
-
-2.) Also push the updated code to GitHub, without production.json & update README.md (app version)
-
-
-AFTER DEPLOYIN THE APP:
+AFTER DEPLOYING THE APP:
 
 1.) Add DevConnector to the Resume (with the Corresponding URL: devconnectorwebapp.herokuapp.com)
 
