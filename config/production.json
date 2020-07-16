@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://Mikan123:mikan123@devconnector-p3tmx.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "someVeryLongRandomStringThatShouldServeItsPurposeByBeingAJSONWebToken",
-  "githubToken": "511b1d7c7de7fe1e57d67b634cab9e79ede872bc"
+  "mongoURI": "YOUR_MONGODB_ATLAS_URI",
+  "jwtSecret": "YOUR_JWT_SECRET",
+  "githubToken": "YOUR_GITHUB_TOKEN"
 }
