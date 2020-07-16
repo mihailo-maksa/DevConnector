@@ -1,7 +1,0 @@
-AFTER DEPLOYING THE APP:
-
-1.) Add DevConnector to the Resume (with the Corresponding URL: devconnectorwebapp.herokuapp.com)
-
-2.) Add DevConnector to Your AngelList Profile 
-
-3.) COMPLETE THE FULL CLOUD FUNCTIONS MASTER COURSE (max. 2 Days!)

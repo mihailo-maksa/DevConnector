@@ -1,5 +1,5 @@
 // React
-import React, { Fragment, useEffect, lazy, Suspense } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // Redux & Utils
@@ -29,17 +29,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment>
-          <ErrorBoundary>
-            <Suspense fallback={<Spinner />}>
-              <Navbar />
-              <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route component={Routes} />
-              </Switch>
-            </Suspense>
-          </ErrorBoundary>
-        </Fragment>
+        <ErrorBoundary>
+          <Suspense fallback={<Spinner />}>
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route component={Routes} />
+            </Switch>
+          </Suspense>
+        </ErrorBoundary>
       </Router>
     </Provider>
   );

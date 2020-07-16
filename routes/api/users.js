@@ -15,9 +15,9 @@ const User = require("../../models/User");
 router.post(
   "/",
   [
-    check("name", "Name is required.").not().isEmpty(),
-    check("email", "Please enter a valid email.").isEmail(),
-    check("password", "Password must contain 8 or more chracters.").isLength({
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Password must contain 8 or more chracters").isLength({
       min: 8
     })
   ],
@@ -80,7 +80,7 @@ router.post(
         // jwt.sign(payloadThatContainsId, secretString, optionsObject, callback with (err, token));
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3600 },
+        { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

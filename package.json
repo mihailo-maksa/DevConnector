@@ -1,7 +1,7 @@
 {
   "name": "devconnector",
   "version": "1.0.0",
-  "description": "DevConnector is a social network that aims to connect developers \u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D \u001b[Dsoftware\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[D\u001b[D\u001b developers from all around the world in the one place!",
+  "description": "DevConnector is a social network that aims to connect developers developers from all around the world in the one place!",
   "main": "server.js",
   "scripts": {
     "start": "node server",

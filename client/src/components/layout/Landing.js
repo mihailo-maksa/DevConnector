@@ -33,10 +33,22 @@ const Landing = ({ isAuthenticated }) => {
             <Link
               to="/login"
               className="btn btn-light"
-              style={{ borderRadius: "5px", fontWeight: "bold" }}
+              style={{
+                borderRadius: "5px",
+                fontWeight: "bold",
+                marginRight: "25px"
+              }}
               title="Login"
             >
               Login
+            </Link>
+            <Link
+              to="/demo-login"
+              className="btn btn-primary"
+              style={{ borderRadius: "5px", fontWeight: "bold" }}
+              title="Demo Login"
+            >
+              Demo Login
             </Link>
           </div>
         </div>

@@ -10,7 +10,7 @@ const User = require("../../models/User");
 
 // @route   GET api/auth
 // @desc    Let the user see his account's data (i.e. Get user by token)
-// @access  Protected
+// @access  Private
 router.get("/", auth, async (req, res) => {
   // Get the user's data & send it in the JSON format
 
@@ -18,7 +18,7 @@ router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -29,8 +29,8 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("email", "Please include a valid email.").isEmail(),
-    check("password", "Password is required.").exists()
+    check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -45,7 +45,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials." }] });
+          .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -67,7 +67,7 @@ router.post(
         // jwt.sign(payloadThatContainsId, secretString, optionsObject, callback with (err, token));
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3600 },
+        { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

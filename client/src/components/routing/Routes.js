@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 const Register = lazy(() => import("../auth/Register"));
 const Login = lazy(() => import("../auth/Login"));
+const Demo = lazy(() => import("../auth/Demo"));
 const Alert = lazy(() => import("../layout/Alert"));
 const Dashboard = lazy(() => import("../dashboard/Dashboard"));
 const PrivateRoute = lazy(() => import("./PrivateRoute"));
@@ -15,26 +16,25 @@ const Posts = lazy(() => import("../posts/Posts"));
 const Post = lazy(() => import("../post/Post"));
 const NotFound = lazy(() => import("../layout/NotFound"));
 
-const Routes = () => {
-  return (
-    <section className="container">
-      <Alert />
-      <Switch>
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/profiles" component={Profiles} />
-        <Route exact path="/profile/:id" component={Profile} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        <PrivateRoute exact path="/create-profile" component={ProfileForm} />
-        <PrivateRoute exact path="/edit-profile" component={ProfileForm} />
-        <PrivateRoute exact path="/add-experience" component={AddExperience} />
-        <PrivateRoute exact path="/add-education" component={AddEducation} />
-        <PrivateRoute exact path="/posts" component={Posts} />
-        <PrivateRoute exact path="/post/:id" component={Post} />
-        <Route component={NotFound} />
-      </Switch>
-    </section>
-  );
-};
+const Routes = () => (
+  <section className="container">
+    <Alert />
+    <Switch>
+      <Route exact path="/register" component={Register} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/demo-login" component={Demo} />
+      <Route exact path="/profiles" component={Profiles} />
+      <Route exact path="/profile/:id" component={Profile} />
+      <PrivateRoute exact path="/dashboard" component={Dashboard} />
+      <PrivateRoute exact path="/create-profile" component={ProfileForm} />
+      <PrivateRoute exact path="/edit-profile" component={ProfileForm} />
+      <PrivateRoute exact path="/add-experience" component={AddExperience} />
+      <PrivateRoute exact path="/add-education" component={AddEducation} />
+      <PrivateRoute exact path="/posts" component={Posts} />
+      <PrivateRoute exact path="/post/:id" component={Post} />
+      <Route component={NotFound} />
+    </Switch>
+  </section>
+);
 
 export default memo(Routes);
