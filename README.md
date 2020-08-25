@@ -5,7 +5,7 @@
 DevConnector is a full stack social media web app that connects software developers from all over the world.
 
 ## Technologies Used 
-The MERN Stack - MongoDB, Express, React & Node.js
+The MERN Stack - MongoDB, Express, React and Node.js
 
 ## App Info
 
